@@ -145,7 +145,11 @@
     var value = button.getAttribute('data-copy');
     if (!value) return;
     button.dataset.copying = '1';
-    copyText(value).finally(function () {
+    copyText(value).then(function () {
+      toast('Copied', 'ok');
+    }).catch(function () {
+      toast('Could not copy the id', 'error');
+    }).finally(function () {
       button.dataset.copying = '0';
     });
   }
