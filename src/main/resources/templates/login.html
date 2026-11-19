@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Statement Delivery</title>
+    <!-- Applies the saved theme before first paint to avoid a flash. -->
+    <script>
+        (function () {
+            try {
+                var theme = localStorage.getItem('theme');
+                if (!theme) theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                document.documentElement.dataset.theme = theme;
+            } catch (e) { document.documentElement.dataset.theme = 'light'; }
+        })();
+    </script>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body class="auth">
+<main class="signin frame">
+    <div class="signin__bar">Secure portal</div>
+    <div class="signin__body">
+        <img class="logo" th:src="@{/img/capitec-logo.png}" alt="Capitec">
+        <h1>Statement Delivery</h1>
+        <p class="signin__text">Sign in to view your account statements.</p>
+        <p class="signin__error" th:if="${error}" role="alert">Sign-in failed. Please try again.</p>
+        <a class="btn btn--solid" th:href="@{/oauth2/authorization/cognito}">Sign in</a>
+    </div>
+    <div class="signin__bar signin__bar--foot">Secured sign-in</div>
+</main>
+</body>
+</html>

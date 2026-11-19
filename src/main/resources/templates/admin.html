@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::main}, 'admin')}">
+<head>
+    <title>Admin - Statement delivery</title>
+</head>
+<body>
+<main class="content">
+    <section class="page-head">
+        <p class="crumb">Portal / Admin</p>
+        <div>
+            <h1>Admin</h1>
+            <p class="lede">Add an account type or upload a statement.</p>
+        </div>
+    </section>
+
+    <section class="frame">
+        <form class="admin-form" method="post" th:action="@{/admin/account-types}">
+            <div class="sheet__title">New account type</div>
+            <div class="field">
+                <label for="code">Code</label>
+                <input id="code" name="code" required maxlength="30" autocomplete="off">
+            </div>
+            <div class="field">
+                <label for="label">Label</label>
+                <input id="label" name="label" required maxlength="100" autocomplete="off">
+            </div>
+            <button type="submit" class="btn btn--solid">Save type</button>
+        </form>
+    </section>
+
+    <section class="frame">
+        <form class="admin-form" method="post" th:action="@{/admin/statements}" enctype="multipart/form-data">
+            <div class="sheet__title">New statement</div>
+            <div class="field" th:if="${!accounts.empty}">
+                <label for="accountId">Account</label>
+                <select id="accountId" name="accountId" required>
+                    <option value="" disabled selected>Select an account</option>
+                    <option th:each="a : ${accounts}" th:value="${a.id}"
+                            th:text="${a.accountType.label} + ' ' + ${#strings.substring(a.id.toString(), 0, 8)}">Savings</option>
+                </select>
+            </div>
+            <p th:if="${accounts.empty}">Create an account before uploading a statement.</p>
+            <div class="field">
+                <label for="file">File</label>
+                <input id="file" name="file" type="file" required th:attr="accept=${accept}">
+            </div>
+            <button type="submit" class="btn btn--solid" th:disabled="${accounts.empty}">Upload statement</button>
+        </form>
+    </section>
+</main>
+</body>
+</html>

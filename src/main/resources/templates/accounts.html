@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::main}, 'accounts')}">
+<head>
+    <title>Accounts - Statement delivery</title>
+</head>
+<body>
+<main class="content">
+    <section class="page-head">
+        <p class="crumb">Portal / Accounts</p>
+        <div class="page-head__row">
+            <div>
+                <h1>Accounts</h1>
+                <p class="lede">View an account to see its statements.</p>
+            </div>
+            <button type="button" class="btn btn--solid" data-account-dialog data-mode="create">+ New account</button>
+        </div>
+    </section>
+
+    <section class="frame" th:if="${accounts.empty}">
+        <div class="empty">
+            <div class="empty__title">No accounts yet</div>
+            <p>Create your first account to get started.</p>
+            <button type="button" class="btn btn--solid" data-account-dialog data-mode="create">+ New account</button>
+        </div>
+    </section>
+
+    <section class="frame" th:unless="${accounts.empty}">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Type</th>
+                <th scope="col">Account ID</th>
+                <th scope="col">Created</th>
+                <th scope="col" class="col-actions col-actions-head">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="a : ${accounts}">
+                <td data-label="Type"><span class="cell-text" th:text="${a.accountType.label}">Savings</span></td>
+                <td data-label="Account ID"><span th:replace="~{fragments/macros :: ref(${a.id})}"></span></td>
+                <td data-label="Created"><time th:datetime="${a.createTime}" th:text="${a.createTime}">2026-11-17</time></td>
+                <td class="col-actions">
+                    <div class="actions">
+                        <a class="btn" th:href="@{/accounts/{id}/statements(id=${a.id})}">View</a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+</body>
+</html>

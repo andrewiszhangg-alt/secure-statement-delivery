@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: statement-delivery-postgres
+    environment:
+      POSTGRES_DB: ${DB_NAME:-statements}
+      POSTGRES_USER: ${DB_USER:-statements}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-statements}
+    ports:
+      - "${DB_PORT:-5433}:5432"
+    volumes:
+      - statement-delivery-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-statements} -d ${DB_NAME:-statements}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  statement-delivery-pgdata:

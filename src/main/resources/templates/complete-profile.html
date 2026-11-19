@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Complete your profile - Statement Delivery</title>
+    <!-- Applies the saved theme before first paint to avoid a flash. -->
+    <script>
+        (function () {
+            try {
+                var theme = localStorage.getItem('theme');
+                if (!theme) theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                document.documentElement.dataset.theme = theme;
+            } catch (e) { document.documentElement.dataset.theme = 'light'; }
+        })();
+    </script>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body class="auth">
+<main class="signin frame">
+    <div class="signin__bar">Secure portal</div>
+    <form class="signin__body signin__form" method="post" th:action="@{/complete-profile}">
+        <img class="logo" th:src="@{/img/capitec-logo.png}" alt="Capitec">
+        <h1>Complete your profile</h1>
+        <p class="signin__text">
+            Add your name to continue. Your email comes from your secure sign-in
+            (<b th:text="${email}">you@example.com</b>).
+        </p>
+        <p class="signin__error" th:if="${error}" th:text="${error}" role="alert">Error</p>
+
+        <div class="field">
+            <label for="firstName">First name</label>
+            <input id="firstName" name="firstName" type="text" maxlength="255" required autofocus
+                   autocomplete="given-name" th:value="${firstName}">
+        </div>
+        <div class="field">
+            <label for="lastName">Last name</label>
+            <input id="lastName" name="lastName" type="text" maxlength="255" required
+                   autocomplete="family-name" th:value="${lastName}">
+        </div>
+        <button type="submit" class="btn btn--solid">Save and continue</button>
+    </form>
+    <div class="signin__bar signin__bar--foot">
+        <!-- POST with CSRF token -->
+        <form method="post" th:action="@{/logout}">
+            <button type="submit" class="link-btn">Sign out</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

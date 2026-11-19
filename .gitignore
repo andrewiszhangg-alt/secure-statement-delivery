@@ -1,0 +1,51 @@
+HELP.md
+.env
+
+### Gradle (generated) ###
+.gradle/
+build/
+bin/
+out/
+*.class
+gradle-app.setting
+.gradletasknamecache
+!**/src/main/**/build/
+!**/src/test/**/build/
+# The wrapper jar is the build tool a clone runs. It is not build output.
+!gradle/wrapper/gradle-wrapper.jar
+
+### STS / Eclipse (generated) ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code (generated) ###
+.vscode/
+.history/
+*.vsix
+
+### Cursor (generated) ###
+.cursor/
+
+### Local config (contains AWS keys) ###
+application-local.yml
+
+### One-time host provisioning. A clone builds from the example config. ###
+scripts/

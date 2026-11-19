@@ -1,0 +1,8 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- Short form of an account id: its first eight characters. -->
+<span class="ref" th:fragment="ref(id)" th:title="${id}"
+      th:text="${#strings.substring(id, 0, 8)}">7a02dfaf</span>
+</body>
+</html>

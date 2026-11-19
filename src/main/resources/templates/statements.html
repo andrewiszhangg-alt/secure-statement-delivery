@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::main}, 'statements')}">
+<head>
+    <title>Statements - Statement delivery</title>
+</head>
+<body>
+<main class="content">
+    <section class="page-head">
+        <p class="crumb"><a th:href="@{/accounts}">Accounts</a> / <span th:text="${currentAccount.accountType.label}">Savings</span> <span th:replace="~{fragments/macros :: ref(${currentAccount.id})}"></span></p>
+        <h1>Statements</h1>
+        <p class="lede">Open or copy a time-limited link to a statement.</p>
+    </section>
+
+    <section class="frame" th:if="${statements.empty}">
+        <div class="empty">
+            <div class="empty__title">No statements yet</div>
+            <p>They will appear here once they are issued.</p>
+        </div>
+    </section>
+
+    <section class="frame" th:unless="${statements.empty}">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Uploaded</th>
+                <th scope="col" class="col-actions col-actions-head">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="s : ${statements.content}">
+                <td class="cell-id" data-label="ID"><code th:text="${s.id}" th:title="${s.id}">7a02dfaf-e88a-4655</code></td>
+                <td data-label="Uploaded"><time th:datetime="${s.createTime}" th:text="${s.createTime}">2026-10-07</time></td>
+                <td class="col-actions">
+                    <div class="actions"
+                         th:with="url=@{/accounts/{accountId}/statements/{statementId}/link(accountId=${currentAccount.id},statementId=${s.id})}">
+                        <a class="btn" target="_blank" rel="noopener"
+                           th:href="@{/accounts/{accountId}/statements/{statementId}/view(accountId=${currentAccount.id},statementId=${s.id})}">View</a>
+                        <button type="button" class="btn" data-action="copy" th:data-url="${url}"
+                                th:data-minutes="${linkMinutes}">Copy</button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="pager" th:if="${statements.totalPages > 1}">
+            <a class="btn" th:href="@{/accounts/{id}/statements(id=${currentAccount.id},page=${statements.number - 1})}"
+               th:classappend="${!statements.hasPrevious()} ? 'is-disabled'">&lt; Prev</a>
+            <span class="pager__info" th:text="${statements.number + 1} + ' / ' + ${statements.totalPages}">1 / 3</span>
+            <a class="btn" th:href="@{/accounts/{id}/statements(id=${currentAccount.id},page=${statements.number + 1})}"
+               th:classappend="${!statements.hasNext()} ? 'is-disabled'">Next &gt;</a>
+        </div>
+    </section>
+</main>
+</body>
+</html>

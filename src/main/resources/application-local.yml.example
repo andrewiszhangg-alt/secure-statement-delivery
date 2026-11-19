@@ -1,0 +1,39 @@
+# Copy this file to application-local.yml and fill in your own values.
+# application-local.yml is gitignored. Do not commit it.
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/statements
+    username: statements
+    password: statements
+  jpa:
+    show-sql: true
+
+app:
+  security:
+    dev-token:
+      # Stays off. Turning it on exposes /dev/access-token on this machine.
+      enabled: false
+  aws:
+    # Region of your bucket and your Cognito user pool.
+    region: eu-central-1
+    # Leave both blank to use the AWS credential chain (aws configure, or an instance role).
+    access-key:
+    secret-key:
+    s3:
+      presign-expiration-minutes: 15
+  statement:
+    page-size: 5
+    # The S3 bucket name. The bucket must already exist in the region above.
+    media-context: REPLACE_ME
+  cognito:
+    issuer-uri: https://cognito-idp.eu-central-1.amazonaws.com/REPLACE_ME
+    domain: https://REPLACE_ME.auth.eu-central-1.amazoncognito.com
+    web-client-id: REPLACE_ME
+    web-client-secret: REPLACE_ME
+    api-client-ids: REPLACE_ME
+    logout-redirect-uri: http://localhost:8080/
+
+logging:
+  level:
+    com.chitsa: INFO
