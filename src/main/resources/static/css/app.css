@@ -92,12 +92,13 @@ code { font-family: var(--mono); }
 .frame::before { top: -4px; left: -4px; border-top: 2px solid var(--fg); border-left: 2px solid var(--fg); }
 .frame::after { bottom: -4px; right: -4px; border-bottom: 2px solid var(--fg); border-right: 2px solid var(--fg); }
 
-/* Header wraps on phones: brand + tools, then the picker on its own row */
+/* Header is always the full column. Tools stay at the right; the picker wraps beneath on phones. */
 .topbar {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 8px;
+  width: 100%;
   padding: 10px;
 }
 .brand {
@@ -199,7 +200,7 @@ code { font-family: var(--mono); }
 .btn.is-loading { opacity: 0.7; pointer-events: none; }
 .btn.is-loading::after { content: "..."; }
 
-.tools { display: flex; flex: none; order: 2; gap: 8px; }
+.tools { display: flex; flex: none; order: 2; gap: 8px; margin-left: auto; }
 .tools form { display: flex; }
 .icon-btn { width: var(--tap); padding: 0; }
 .icon-btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; }
@@ -211,8 +212,35 @@ code { font-family: var(--mono); }
 .picker { position: relative; flex: 1 1 100%; min-width: 0; order: 3; }
 .picker__btn { width: 100%; justify-content: space-between; text-align: left; }
 .picker__label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.ref { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; }
-.picker__label .ref { color: var(--muted); font-weight: 400; margin-left: 6px; }
+.ref {
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+.picker__label .ref { color: var(--muted); margin-left: 6px; }
+.id-cell {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+  text-align: left;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.id-cell:hover { text-decoration: underline; }
 
 .scrim { position: fixed; inset: 0; z-index: 30; background: var(--scrim); }
 
@@ -286,9 +314,7 @@ code { font-family: var(--mono); }
   color: var(--muted);
   text-transform: uppercase;
 }
-.cell-id code, .cell-text { display: block; overflow: hidden; text-overflow: ellipsis; font-size: 12px; }
-.cell-id code { overflow-wrap: anywhere; white-space: normal; }
-.cell-text { font-size: inherit; font-family: var(--sans); white-space: nowrap; }
+.cell-text { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .actions:has(> :only-child) { grid-template-columns: 1fr; }
 .actions .btn { width: 100%; }
@@ -422,7 +448,7 @@ code { font-family: var(--mono); }
   .table tr { border-bottom: 0; }
   .table tbody tr + tr td { border-top: 1px solid var(--soft-line); }
   .table td[data-label]::before { display: none; }
-  .cell-id code { max-width: 28ch; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cell-id { width: 42%; }
   .col-actions { width: 1%; white-space: nowrap; }
   .actions { grid-template-columns: repeat(2, auto); justify-content: end; }
   .actions .btn { width: auto; }
@@ -439,5 +465,6 @@ code { font-family: var(--mono); }
   .brand { flex: 0 1 auto; }
   .picker { flex: 1 1 220px; order: 2; }
   .tools { order: 3; }
+  .topbar:has(.picker) .tools { margin-left: 0; }
   .picker__btn { min-width: 0; }
 }

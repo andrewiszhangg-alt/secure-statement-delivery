@@ -30,7 +30,7 @@
             </thead>
             <tbody>
             <tr th:each="s : ${statements.content}">
-                <td class="cell-id" data-label="ID"><code th:text="${s.id}" th:title="${s.id}">7a02dfaf-e88a-4655</code></td>
+                <td class="cell-id" data-label="ID"><span th:replace="~{fragments/macros :: idCell(${s.id})}"></span></td>
                 <td data-label="Uploaded"><time th:datetime="${s.createTime}" th:text="${s.createTime}">2026-10-07</time></td>
                 <td class="col-actions">
                     <div class="actions"

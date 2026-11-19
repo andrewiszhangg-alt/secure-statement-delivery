@@ -38,7 +38,7 @@
             <tbody>
             <tr th:each="a : ${accounts}">
                 <td data-label="Type"><span class="cell-text" th:text="${a.accountType.label}">Savings</span></td>
-                <td data-label="Account ID"><span th:replace="~{fragments/macros :: ref(${a.id})}"></span></td>
+                <td class="cell-id" data-label="Account ID"><span th:replace="~{fragments/macros :: idCell(${a.id})}"></span></td>
                 <td data-label="Created"><time th:datetime="${a.createTime}" th:text="${a.createTime}">2026-11-17</time></td>
                 <td class="col-actions">
                     <div class="actions">

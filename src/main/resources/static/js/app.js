@@ -56,7 +56,9 @@
       scrim.hidden = !open;
       pickerButton.setAttribute('aria-expanded', String(open));
     };
-    pickerButton.addEventListener('click', function () { setPicker(menu.hidden); });
+    pickerButton.addEventListener('click', function () {
+      setPicker(menu.hidden);
+    });
     scrim.addEventListener('click', function () { setPicker(false); });
     document.addEventListener('keydown', function (event) {
       if (event.key === 'Escape') setPicker(false);
@@ -122,7 +124,38 @@
     }
   }
 
+  function copyText(value) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(value);
+    }
+    var field = document.createElement('textarea');
+    field.value = value;
+    field.setAttribute('readonly', '');
+    field.style.position = 'fixed';
+    field.style.left = '-9999px';
+    document.body.appendChild(field);
+    field.select();
+    var ok = document.execCommand('copy');
+    field.remove();
+    return ok ? Promise.resolve() : Promise.reject(new Error('Could not copy'));
+  }
+
+  function onCopyId(button) {
+    if (button.dataset.copying === '1') return;
+    var value = button.getAttribute('data-copy');
+    if (!value) return;
+    button.dataset.copying = '1';
+    copyText(value).finally(function () {
+      button.dataset.copying = '0';
+    });
+  }
+
   document.addEventListener('click', function (event) {
+    var idButton = event.target.closest('.id-cell[data-copy]');
+    if (idButton) {
+      onCopyId(idButton);
+      return;
+    }
     var button = event.target.closest('button[data-action="copy"]');
     if (button) onCopy(button);
   });
