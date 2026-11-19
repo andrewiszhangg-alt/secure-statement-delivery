@@ -1,5 +1,6 @@
 package com.chitsa.accounttype.service.impl;
 
+import com.chitsa.accounttype.dto.AccountTypeRequestDto;
 import com.chitsa.accounttype.dto.AccountTypeResponseDto;
 import com.chitsa.accounttype.entity.AccountType;
 import com.chitsa.accounttype.exception.AccountTypeNotFoundException;
@@ -60,9 +61,7 @@ public class AccountTypeServiceImpl implements AccountTypeService {
         if (repository.existsByCode(normalized)) {
             throw duplicate(normalized);
         }
-        var entity = new AccountType();
-        entity.setCode(normalized);
-        entity.setLabel(trimmedLabel);
+        var entity = mapper.convertDtoToEntity(new AccountTypeRequestDto(normalized, trimmedLabel));
         try {
             var saved = repository.saveAndFlush(entity);
             dropCacheAfterCommit();

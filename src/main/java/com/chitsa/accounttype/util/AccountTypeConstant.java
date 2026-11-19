@@ -17,5 +17,7 @@ public class AccountTypeConstant {
 
     public static final String DUPLICATE = "Account type already exists: ";
 
+    public static final String UPDATE_NOT_SUPPORTED = "Account type update is not supported";
+
     public static final String API_PATH = "/api/account-types";
 }
