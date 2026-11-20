@@ -47,18 +47,17 @@ Run the app:
 .\gradlew.bat bootRun
 ```
 
-Open [http://localhost:8080](http://localhost:8080).
+Open [http://localhost:8080](http://localhost:8080). **Sign in** sends you to the Cognito hosted UI. After Cognito accepts the password, the app asks for a first and last name if the profile is incomplete. The email comes from the token. You then land on **Accounts**.
 
-![Sign-in page](docs/images/sign-in.png)
+The demo currently has two accounts, a credit card and a personal account. The credit card has one statement.
 
-**Sign in** sends you to the Cognito hosted UI.
-
-![Cognito sign-in](docs/images/cognito-sign-in.png)
-
-After Cognito accepts the password, the app asks for a first and last name if the profile is incomplete. The email comes from the token. You then land on **Accounts**.
+![Accounts](docs/images/accounts.png)
 
 - **New account** picks one of the types Flyway inserts: Savings, Credit card, Business, or Personal.
 - **View** opens that account's statements. **View** on a statement opens the PDF. **Copy** copies a link that expires 15 minutes after it was signed. The cache on the server drops the link two minutes earlier.
+
+![Statements](docs/images/statements.png)
+
 - A user in the group `ADMIN` also sees an **Admin** link at the bottom of the page. That page adds an account type or uploads a statement. The file has to be a PDF, and the bytes have to start with `%PDF`. The upload limit is 25 MB.
 
 Scalar API docs are off in the template. For a local session you can set `scalar.enabled` and `springdoc.api-docs.enabled` to `true` in `application-local.yml`. Leave `app.security.dev-token.enabled` false.
